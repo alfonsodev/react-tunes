@@ -2,36 +2,18 @@ import Hapi from 'hapi';
 import HapiSwagger from 'hapi-swagger';
 import inert from 'inert';
 import vision from 'vision';
-import Pack from '../package';
+import Debug from 'debug';
+import swaggerOptions from './swagger';
 import data from './mockData';
 
+
+const debug = Debug('api');
+
 const server = Hapi.server({
-  port: process.env.PORT || 3000,
+  port: process.env.PORT || 5000,
   host: '0.0.0.0',
 });
 
-const swaggerOptions = {
-  info: {
-    title: '⚛️🎶 React Tunes API',
-    description: 'Api that provides information about songs and songs metadata.',
-    contact: {
-      name: 'Alfonso Fernandez',
-      url: 'https://www.linkedin.com/in/alfonsodev',
-    },
-    license: {
-      name: Pack.license,
-    },
-    version: Pack.version,
-  },
-  documentationPath: '/',
-  basePath: '/api/',
-};
-
-const options = {
-  state: {
-    parse: false,
-  },
-};
 const init = async () => {
   await server.register([
     inert,
@@ -42,7 +24,7 @@ const init = async () => {
     },
   ]);
   await server.start();
-  console.log(`Server running: ${process.env.PORT}`);
+  debug(`Server running: ${process.env.PORT}`);
 };
 
 server.route({
@@ -63,7 +45,7 @@ server.route({
 });
 
 process.on('unhandledRejection', (err) => {
-  console.log(err);
+  debug(err);
   process.exit(1);
 });
 

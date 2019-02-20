@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/.bin/eslint -c .eslintrc.js \"src/**\"",
     "build": "sh -c 'node_modules/.bin/webpack'",
-    "start": "node build/index",
+    "start": "DEBUG=api node build/index",
     "release": "docker build --no-cache . -t web && heroku container:push web -a react-tunes && heroku container:release web -a react-tunes"
   },
   "keywords": [],
@@ -19,7 +19,8 @@
     "hapi-swagger": "^9.3.1",
     "inert": "^5.1.2",
     "vision": "^5.4.4",
-    "webpack": "^4.29.5"
+    "webpack": "^4.29.5",
+    "debug": "^4.1.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
